@@ -1,0 +1,29 @@
+// EVCharge Intelligence - DAX measures for table EVCharge
+// Column names match EVCharge_PowerBI_Predictions__1_.csv exactly.
+
+Total Charging Records = COUNTROWS(EVCharge)
+
+Avg Actual Demand = AVERAGE(EVCharge[Energy_Demand_kWh])
+
+Avg Predicted Demand = AVERAGE(EVCharge[Predicted_Demand_kWh])
+
+Demand Prediction MAE = AVERAGE(EVCharge[Absolute_Demand_Error_kWh])
+
+High Demand Risk % =
+DIVIDE(
+    CALCULATE([Total Charging Records], EVCharge[Demand_Risk] = "High"),
+    [Total Charging Records],
+    0
+)
+
+Avg Customer Rating = AVERAGE(EVCharge[Customer_Rating])
+
+Predicted High Congestion Records =
+CALCULATE([Total Charging Records], EVCharge[Predicted_Congestion] = "High")
+
+Congestion Accuracy % =
+DIVIDE(
+    CALCULATE([Total Charging Records], EVCharge[Congestion_Correct] = "Yes"),
+    [Total Charging Records],
+    0
+)
